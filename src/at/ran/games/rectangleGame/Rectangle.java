@@ -20,6 +20,7 @@ public class Rectangle implements Actor{
     @Override
     public void render(Graphics graphics) {
         graphics.drawRect(this.x, this.y, 40, 40);
+
     }
 
     @Override
