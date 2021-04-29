@@ -19,7 +19,7 @@ public class Laserbeam implements IActor{
 
     @Override
     public void render(Graphics graphics) {
-        laserBeam.draw(this.x-5, this.y);
+        laserBeam.draw(this.x - 5, this.y + 10);
     }
 
     @Override

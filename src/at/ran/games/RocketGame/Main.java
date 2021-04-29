@@ -9,6 +9,7 @@ public class Main extends BasicGame {
 
     private List<IActor> actorList;
     private PlayerFighter playerFighter;
+    private Sound sound;
 
     public Main(String title) {
         super(title);
@@ -20,6 +21,7 @@ public class Main extends BasicGame {
         PlayerFighter playerFighter = new PlayerFighter();
         this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
+        sound = new Sound("src/at/ran/games/RocketGame/sounds/XWing-Laser.wav");
     }
 
     @Override
@@ -45,6 +47,7 @@ public class Main extends BasicGame {
                 Laserbeam lb_right = new Laserbeam(playerFighter.getX() +68, playerFighter.getY());
                 this.actorList.add(lb_left);
                 this.actorList.add(lb_right);
+                sound.play();
             } catch (SlickException e) {
                 e.printStackTrace();
             }
