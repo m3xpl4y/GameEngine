@@ -40,4 +40,8 @@ public class NPCEnemy implements IActor{
         this.collisonShape.setX(this.x);
         this.collisonShape.setY(this.y);
     }
+
+    public Shape getCollisonShape() {
+        return collisonShape;
+    }
 }

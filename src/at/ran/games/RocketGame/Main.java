@@ -26,7 +26,8 @@ public class Main extends BasicGame {
         for (int i = 0; i <15; i++) {
             NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,6);
             this.actorList.add(npcEnemy);
-        }
+            this.playerFighter.addCollisonPartner(npcEnemy);
+         }
         sound = new Sound("src/at/ran/games/RocketGame/sounds/XWing-Laser.wav");
     }
 

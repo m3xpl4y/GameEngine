@@ -5,17 +5,22 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerFighter implements IActor{
 
     private int x = 370;
     private int y = 520;
     private Image playerImage;
     private Shape collisonShape;
+    private List<NPCEnemy> npcEnemyList;
 
     public PlayerFighter() throws SlickException {
        Image tmp = new Image("src/at/ran/games/RocketGame/images/xwing.png");
         this.playerImage = tmp.getScaledCopy(75,75);
         this.collisonShape = new Circle(this.x,this.y, playerImage.getWidth()/2, playerImage.getHeight()/2);
+        this.npcEnemyList = new ArrayList<NPCEnemy>();
     }
 
     @Override
@@ -26,6 +31,13 @@ public class PlayerFighter implements IActor{
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
+        for (NPCEnemy npcEnemys: npcEnemyList) {
+            if(this.collisonShape.intersects(npcEnemys.getCollisonShape()))
+            {
+                System.out.println("Collision");
+            }
+        }
+
         if(gameContainer.getInput().isKeyDown(Input.KEY_A) || gameContainer.getInput().isKeyDown(Input.KEY_LEFT))
         {
             this.x -= 4;
@@ -52,5 +64,10 @@ public class PlayerFighter implements IActor{
 
     public int getY() {
         return y;
+    }
+
+    public void addCollisonPartner(NPCEnemy npcEnemy)
+    {
+        this.npcEnemyList.add(npcEnemy);
     }
 }
