@@ -6,12 +6,11 @@ public class PlayerFighter implements IActor{
 
     private int x = 370;
     private int y = 520;
-    private int h,w;
     private Image playerImage;
 
     public PlayerFighter() throws SlickException {
        Image tmp = new Image("src/at/ran/games/RocketGame/images/xwing.png");
-        this.playerImage = tmp.getScaledCopy(60,60);
+        this.playerImage = tmp.getScaledCopy(75,75);
     }
 
     @Override
@@ -37,5 +36,13 @@ public class PlayerFighter implements IActor{
         {
             this.y -= 4;
         }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

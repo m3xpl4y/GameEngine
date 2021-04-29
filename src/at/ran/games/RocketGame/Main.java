@@ -8,6 +8,7 @@ import java.util.List;
 public class Main extends BasicGame {
 
     private List<IActor> actorList;
+    private PlayerFighter playerFighter;
 
     public Main(String title) {
         super(title);
@@ -17,6 +18,7 @@ public class Main extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         this.actorList = new ArrayList<>();
         PlayerFighter playerFighter = new PlayerFighter();
+        this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
     }
 
@@ -36,7 +38,17 @@ public class Main extends BasicGame {
 
     @Override
     public void keyPressed(int key, char c) {
-
+        if(key == Input.KEY_SPACE)
+        {
+            try {
+                Laserbeam lb_left = new Laserbeam(playerFighter.getX(), playerFighter.getY());
+                Laserbeam lb_right = new Laserbeam(playerFighter.getX() +68, playerFighter.getY());
+                this.actorList.add(lb_left);
+                this.actorList.add(lb_right);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] argv) {
