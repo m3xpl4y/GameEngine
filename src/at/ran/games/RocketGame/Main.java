@@ -4,6 +4,7 @@ import org.newdawn.slick.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Main extends BasicGame {
 
@@ -21,6 +22,11 @@ public class Main extends BasicGame {
         PlayerFighter playerFighter = new PlayerFighter();
         this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
+        Random rnd = new Random();
+        for (int i = 0; i <15; i++) {
+            NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,6);
+            this.actorList.add(npcEnemy);
+        }
         sound = new Sound("src/at/ran/games/RocketGame/sounds/XWing-Laser.wav");
     }
 

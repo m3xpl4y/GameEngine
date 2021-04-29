@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class Snowflake extends BasicGame {
     private List<Actor> actorList;
+
     public Snowflake(String title) {
         super(title);
     }
