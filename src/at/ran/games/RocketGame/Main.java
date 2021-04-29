@@ -1,5 +1,6 @@
 package at.ran.games.RocketGame;
 
+import at.ran.games.RocketGame.interfaces.IActor;
 import org.newdawn.slick.*;
 
 import java.util.ArrayList;

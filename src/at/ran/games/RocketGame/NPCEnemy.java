@@ -1,5 +1,7 @@
 package at.ran.games.RocketGame;
 
+import at.ran.games.RocketGame.interfaces.IActor;
+import at.ran.games.RocketGame.interfaces.ICollision;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class NPCEnemy implements IActor{
+public class NPCEnemy implements IActor, ICollision {
 
     private float x,y;
     private int speed;
@@ -41,7 +43,8 @@ public class NPCEnemy implements IActor{
         this.collisonShape.setY(this.y);
     }
 
-    public Shape getCollisonShape() {
+    @Override
+    public Shape getShape() {
         return collisonShape;
     }
 }
