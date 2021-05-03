@@ -39,7 +39,7 @@ public class NPCEnemy implements ICollision {
     @Override
     public void render(Graphics graphics) {
         NPCimage.draw(this.x,this.y);
-        graphics.draw(this.collisonShape);
+        //graphics.draw(this.collisonShape);
     }
 
     @Override

@@ -11,9 +11,9 @@ import java.util.Random;
 public class Main extends BasicGame {
 
     private List<ICollision> actorList;
+    private List<NPCEnemy> npcEnemyList;
     private PlayerFighter playerFighter;
     private NPCEnemy npcEnemy;
-    private Laserbeam laserbeam;
     private Sound sound;
 
     public Main(String title) {
@@ -23,15 +23,15 @@ public class Main extends BasicGame {
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         this.actorList = new ArrayList<>();
+        this.npcEnemyList = new ArrayList<>() ;
         Random rnd = new Random();
         PlayerFighter playerFighter = new PlayerFighter();
         this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
-        this.laserbeam = laserbeam;
         //Enemy For-Schleife
         for (int i = 0; i <15; i++) {
             NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,6, 100, 50  );
-            this.npcEnemy = npcEnemy;
+            this.npcEnemyList.add(npcEnemy);
             this.actorList.add(npcEnemy);
             this.playerFighter.addCollisionPartner(npcEnemy);
          }
@@ -58,9 +58,10 @@ public class Main extends BasicGame {
         {
             try {
                 Laserbeam laserbeam = new Laserbeam(playerFighter.getX(), playerFighter.getY(), 10.0f);
-                this.laserbeam = laserbeam;
                 this.actorList.add(laserbeam);
-                this.npcEnemy.addCollisionLaserBeamPartner(laserbeam);
+                for (NPCEnemy items: npcEnemyList) {
+                    items.addCollisionLaserBeamPartner(laserbeam);
+                }
                 sound.play();
             } catch (SlickException e) {
                 e.printStackTrace();

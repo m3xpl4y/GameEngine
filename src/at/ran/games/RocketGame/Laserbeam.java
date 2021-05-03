@@ -36,8 +36,8 @@ public class Laserbeam implements ICollision {
     public void render(Graphics graphics) {
         laserBeamL.draw(this.xL - 5, this.yL + 10);
         laserBeamR.draw(this.xR +61, this.yR + 10);
-        graphics.draw(this.collisonShape);
-        graphics.draw(this.collisonShape2);
+//        graphics.draw(this.collisonShape);
+//        graphics.draw(this.collisonShape2);
     }
 
     @Override
