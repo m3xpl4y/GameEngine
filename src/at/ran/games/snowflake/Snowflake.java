@@ -46,6 +46,7 @@ public class Snowflake extends BasicGame {
         try {
             AppGameContainer container = new AppGameContainer(new Snowflake("Snowflake by Max"));
             container.setDisplayMode(800,600,false);
+            container.setVSync(true);
             container.start();
         } catch (SlickException e) {
             e.printStackTrace();
