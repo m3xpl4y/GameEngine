@@ -63,4 +63,8 @@ public class Laserbeam implements ICollision {
     public float getWeaponStrength() {
         return weaponStrength;
     }
+
+    public void setWeaponStrength(float weaponStrength) {
+        this.weaponStrength = weaponStrength;
+    }
 }

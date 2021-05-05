@@ -13,7 +13,7 @@ public class Main extends BasicGame {
     private List<ICollision> actorList;
     private List<NPCEnemy> npcEnemyList;
     private PlayerFighter playerFighter;
-    private NPCEnemy npcEnemy;
+    private Laserbeam laserbeam;
     private Sound sound;
 
     public Main(String title) {

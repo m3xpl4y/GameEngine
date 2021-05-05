@@ -21,6 +21,7 @@ public class NPCEnemy implements ICollision {
     private Shape collisonShape;
     private List<ICollision> collisionList;
     int counter = 0;
+    private Laserbeam laserbeam;
 
     public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strenght) throws SlickException {
         Image tmp = new Image("src/at/ran/games/RocketGame/images/tieFighter.png");
@@ -38,7 +39,13 @@ public class NPCEnemy implements ICollision {
 
     @Override
     public void render(Graphics graphics) {
-        NPCimage.draw(this.x,this.y);
+        if(health > 0) {
+            NPCimage.draw(this.x, this.y);
+        }
+        else
+        {
+
+        }
         //graphics.draw(this.collisonShape);
     }
 
@@ -47,7 +54,7 @@ public class NPCEnemy implements ICollision {
         for (ICollision collision: collisionList) {
             if(this.collisonShape.intersects(collision.getShape()))
             {
-                this.health--;
+                counter++;
                 System.out.println("Feuer Collision Links " + this.health);
             }
         }
@@ -55,7 +62,6 @@ public class NPCEnemy implements ICollision {
             if(this.collisonShape.intersects(collision.getShape2()))
             {
                 this.counter++;
-                this.health--;
                 System.out.println("Feuer Collision Rechts " + this.health  + " Zähler: " + this.counter);
             }
         }
