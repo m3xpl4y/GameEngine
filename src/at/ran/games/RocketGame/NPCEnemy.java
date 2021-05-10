@@ -7,12 +7,16 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.particles.ParticleIO;
+import org.newdawn.slick.particles.ParticleSystem;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NPCEnemy implements ICollision {
 
+    private int deaths;
     private float health;
     private float strenght;
     private float x,y;
@@ -21,20 +25,18 @@ public class NPCEnemy implements ICollision {
     private Shape collisonShape;
     private List<ICollision> collisionList;
     int counter = 0;
-    private Laserbeam laserbeam;
 
-    public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strenght) throws SlickException {
+
+    public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strength) throws SlickException {
         Image tmp = new Image("src/at/ran/games/RocketGame/images/tieFighter.png");
         this.NPCimage = tmp.getScaledCopy(55, 55);
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.health = health;
-        this.strenght = strenght;
+        this.strenght = strength;
         this.collisonShape = new Rectangle(this.x,this.y, NPCimage.getWidth(), NPCimage.getHeight());
         this.collisionList = new ArrayList<ICollision>( );
-
-
     }
 
     @Override
@@ -42,46 +44,48 @@ public class NPCEnemy implements ICollision {
         if(health > 0) {
             NPCimage.draw(this.x, this.y);
         }
-        else
-        {
-
+        if (health < 0) {
+            deaths += 10;
         }
         //graphics.draw(this.collisonShape);
     }
 
     @Override
-    public void update(GameContainer gameContainer, int delta) {
-        for (ICollision collision: collisionList) {
-            if(this.collisonShape.intersects(collision.getShape()))
-            {
-                counter++;
-                System.out.println("Feuer Collision Links " + this.health);
-            }
-        }
-        for (ICollision collision: collisionList) {
-            if(this.collisonShape.intersects(collision.getShape2()))
-            {
-                this.counter++;
-                System.out.println("Feuer Collision Rechts " + this.health  + " Zähler: " + this.counter);
-            }
-        }
+    public void update(GameContainer gameContainer, int delta) throws SlickException {
+
+        //region MOVEMENT
         this.y += (float) delta/speed;
         if(this.y > 600)
         {
             this.y = -200;
         }
-        this.collisonShape.setX(this.x);
-        this.collisonShape.setY(this.y);
+        //endregion
+
+            for (ICollision collision: collisionList) {
+                if(this.collisonShape.intersects(collision.getShape()))
+                {
+                    counter++;
+                    this.health -= 6;
+                    System.out.println("Feuer Collision " + this.health);
+                }
+            }
+
+        //region COLLISION
+        if(this.health > 0){
+            this.collisonShape.setX(this.x);
+            this.collisonShape.setY(this.y);
+        }
+        else
+        {
+            this.collisonShape.setY(-500);
+            this.collisonShape.setX(900);
+        }
+        //endregion
     }
 
     @Override
     public Shape getShape() {
         return collisonShape;
-    }
-
-    @Override
-    public Shape getShape2() {
-        return null;
     }
 
 
@@ -90,7 +94,7 @@ public class NPCEnemy implements ICollision {
         this.collisionList.add(collision);
     }
 
-    public float getHealth() {
-        return health;
+    public int getDeaths() {
+        return deaths;
     }
 }

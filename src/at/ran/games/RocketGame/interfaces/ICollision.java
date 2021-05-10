@@ -4,5 +4,4 @@ import org.newdawn.slick.geom.Shape;
 
 public interface ICollision extends IActor{
      Shape getShape();
-     Shape getShape2();
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PlayerFighter implements ICollision {
 
-
+    private int playerMovementSpeed = 4;
     private int x = 370;
     private int y = 520;
     private Image playerImage;
@@ -28,7 +28,7 @@ public class PlayerFighter implements ICollision {
     @Override
     public void render(Graphics graphics) {
         playerImage.draw(this.x, this.y);
-       // graphics.draw(this.collisonShape);
+        graphics.draw(this.collisonShape);
     }
 
     @Override
@@ -37,27 +37,50 @@ public class PlayerFighter implements ICollision {
             if(this.collisonShape.intersects(collision.getShape()))
             {
                 counter++;
-                System.out.println("Collision " + counter);
+                System.out.println("Collision: " + counter);
             }
         }
+
+        //region HOLDING UP THE PLAYER FROM GETTING OUT OF SCREEN
+        if(this.x > 775)
+        {
+            this.x = 775; //RIGHT
+        }
+        if(this.x < -25)
+        {
+            this.x = -25; //LEFT
+        }
+        if(this.y > 555)
+        {
+            this.y = 555; //BOTTOM
+        }
+        if(this.y < 50)
+        {
+            this.y = 50; //LEFT
+        }
+        //endregion
+        //region PLAYER MOVEMENT
         if(gameContainer.getInput().isKeyDown(Input.KEY_A) || gameContainer.getInput().isKeyDown(Input.KEY_LEFT))
         {
-            this.x -= 4;
+            this.x -= playerMovementSpeed;
         }
         if(gameContainer.getInput().isKeyDown(Input.KEY_D) || gameContainer.getInput().isKeyDown(Input.KEY_RIGHT))
         {
-            this.x += 4;
+            this.x += playerMovementSpeed;
         }
         if(gameContainer.getInput().isKeyDown(Input.KEY_S) || gameContainer.getInput().isKeyDown(Input.KEY_DOWN))
         {
-            this.y += 4;
+            this.y += playerMovementSpeed;
         }
         if(gameContainer.getInput().isKeyDown(Input.KEY_W) ||  gameContainer.getInput().isKeyDown(Input.KEY_UP))
         {
-            this.y -= 4;
+            this.y -= playerMovementSpeed;
         }
+        //endregion
+        //region PLAYER COLLISION
         this.collisonShape.setX(this.x);
         this.collisonShape.setY(this.y);
+        //endregion
     }
 
     public int getX() {
@@ -76,10 +99,5 @@ public class PlayerFighter implements ICollision {
     @Override
     public Shape getShape() {
         return collisonShape;
-    }
-
-    @Override
-    public Shape getShape2() {
-        return null;
     }
 }
