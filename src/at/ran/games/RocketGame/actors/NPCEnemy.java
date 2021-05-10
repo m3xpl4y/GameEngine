@@ -1,16 +1,14 @@
-package at.ran.games.RocketGame;
+package at.ran.games.RocketGame.actors;
 
+import at.ran.games.RocketGame.GameHelper;
 import at.ran.games.RocketGame.interfaces.ICollision;
+import at.ran.games.RocketGame.vo.GamePoint;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.particles.ParticleIO;
-import org.newdawn.slick.particles.ParticleSystem;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class NPCEnemy implements ICollision {
     private Shape collisonShape;
     private List<ICollision> collisionList;
     int counter = 0;
-
+    private Fire fire;
 
     public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strength) throws SlickException {
         Image tmp = new Image("src/at/ran/games/RocketGame/images/tieFighter.png");
@@ -37,6 +35,7 @@ public class NPCEnemy implements ICollision {
         this.strenght = strength;
         this.collisonShape = new Rectangle(this.x,this.y, NPCimage.getWidth(), NPCimage.getHeight());
         this.collisionList = new ArrayList<ICollision>( );
+        this.fire = new Fire();
     }
 
     @Override
@@ -46,6 +45,7 @@ public class NPCEnemy implements ICollision {
         }
         if (health < 0) {
             deaths += 10;
+            fire.render(graphics);
         }
         //graphics.draw(this.collisonShape);
     }
@@ -59,14 +59,15 @@ public class NPCEnemy implements ICollision {
         {
             this.y = -200;
         }
-        //endregion
+        //endregionfi
 
             for (ICollision collision: collisionList) {
                 if(this.collisonShape.intersects(collision.getShape()))
                 {
                     counter++;
-                    this.health -= 6;
+                    this.health -= 15;
                     System.out.println("Feuer Collision " + this.health);
+                    fire.update(gameContainer,delta);
                 }
             }
 
@@ -96,5 +97,13 @@ public class NPCEnemy implements ICollision {
 
     public int getDeaths() {
         return deaths;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 }

@@ -1,4 +1,4 @@
-package at.ran.games.RocketGame;
+package at.ran.games.RocketGame.actors;
 
 import at.ran.games.RocketGame.interfaces.ICollision;
 import at.ran.games.RocketGame.vo.GamePoint;

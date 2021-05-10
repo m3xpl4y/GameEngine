@@ -1,5 +1,8 @@
 package at.ran.games.RocketGame;
 
+import at.ran.games.RocketGame.actors.Laserbeam;
+import at.ran.games.RocketGame.actors.NPCEnemy;
+import at.ran.games.RocketGame.actors.PlayerFighter;
 import at.ran.games.RocketGame.interfaces.IActor;
 import at.ran.games.RocketGame.interfaces.ICollision;
 import at.ran.games.RocketGame.vo.GamePoint;
@@ -17,7 +20,6 @@ public class Main extends BasicGame {
     private List<Laserbeam> laserbeamList;
     private PlayerFighter playerFighter;
     private Sound sound;
-    private ParticleSystem fire;
 
     public Main(String title) {
         super(title);
@@ -34,7 +36,7 @@ public class Main extends BasicGame {
         this.actorList.add(playerFighter);
         //Enemy For-Schleife
         for (int i = 0; i <1; i++) {
-            NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,17, 100, 50  );
+            NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,15, 100, 50  );
             this.npcEnemyList.add(npcEnemy);
             this.actorList.add(npcEnemy);
             this.playerFighter.addCollisionPartner(npcEnemy);
