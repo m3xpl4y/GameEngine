@@ -1,6 +1,7 @@
 package at.ran.games.RocketGame.actors;
 
 import at.ran.games.RocketGame.GameHelper;
+import at.ran.games.RocketGame.interfaces.IActor;
 import at.ran.games.RocketGame.interfaces.ICollision;
 import at.ran.games.RocketGame.vo.GamePoint;
 import org.newdawn.slick.GameContainer;
@@ -14,7 +15,6 @@ import java.util.List;
 
 public class NPCEnemy implements ICollision {
 
-    private int deaths;
     private float health;
     private float strenght;
     private float x,y;
@@ -23,7 +23,8 @@ public class NPCEnemy implements ICollision {
     private Shape collisonShape;
     private List<ICollision> collisionList;
     int counter = 0;
-    private Fire fire;
+//    private Explosion explosion;
+//    private int millisSinceStart = 0;
 
     public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strength) throws SlickException {
         Image tmp = new Image("src/at/ran/games/RocketGame/images/tieFighter.png");
@@ -34,8 +35,8 @@ public class NPCEnemy implements ICollision {
         this.health = health;
         this.strenght = strength;
         this.collisonShape = new Rectangle(this.x,this.y, NPCimage.getWidth(), NPCimage.getHeight());
-        this.collisionList = new ArrayList<ICollision>( );
-        this.fire = new Fire();
+        this.collisionList = new ArrayList<ICollision>();
+        //this.explosion = new Explosion();
     }
 
     @Override
@@ -43,34 +44,23 @@ public class NPCEnemy implements ICollision {
         if(health > 0) {
             NPCimage.draw(this.x, this.y);
         }
-        if (health < 0) {
-            deaths += 10;
-            fire.render(graphics);
-        }
+//        if (getHealth() <= 0 && millisSinceStart < 3000) {
+//                explosion.setX(this.x);
+//                explosion.setY(this.y);
+//                explosion.render(graphics);
+//        }
         //graphics.draw(this.collisonShape);
     }
 
     @Override
     public void update(GameContainer gameContainer, int delta) throws SlickException {
-
         //region MOVEMENT
         this.y += (float) delta/speed;
         if(this.y > 600)
         {
-            this.y = -200;
+            this.y = -50;
         }
-        //endregionfi
-
-            for (ICollision collision: collisionList) {
-                if(this.collisonShape.intersects(collision.getShape()))
-                {
-                    counter++;
-                    this.health -= 15;
-                    System.out.println("Feuer Collision " + this.health);
-                    fire.update(gameContainer,delta);
-                }
-            }
-
+        //endregion
         //region COLLISION
         if(this.health > 0){
             this.collisonShape.setX(this.x);
@@ -78,10 +68,23 @@ public class NPCEnemy implements ICollision {
         }
         else
         {
+
             this.collisonShape.setY(-500);
             this.collisonShape.setX(900);
         }
+
         //endregion
+        //region FEUER COLLISION
+            for (ICollision collision: collisionList) {
+                if(this.collisonShape.intersects(collision.getShape()))
+                {
+                    counter++;
+                    this.health -= 21;
+                    System.out.println("Feuer Collision " + this.health);
+                }
+            }
+        //endregion
+        //millisSinceStart += delta;
     }
 
     @Override
@@ -89,21 +92,24 @@ public class NPCEnemy implements ICollision {
         return collisonShape;
     }
 
+    public float getHealth() {
+        return health;
+    }
 
+    public void getEnemyDeathPosition(float x, float y){
+        x = getX();
+        y = getY();
+        System.out.println("ENEMY DEATH AT: " + x +" - " + y);
+    }
     public void addCollisionLaserBeamPartner(ICollision collision)
     {
         this.collisionList.add(collision);
     }
-
-    public int getDeaths() {
-        return deaths;
-    }
-
     public float getX() {
         return x;
     }
-
     public float getY() {
         return y;
     }
+
 }

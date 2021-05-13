@@ -1,5 +1,6 @@
 package at.ran.games.RocketGame;
 
+import at.ran.games.RocketGame.actors.Explosion;
 import at.ran.games.RocketGame.actors.Laserbeam;
 import at.ran.games.RocketGame.actors.NPCEnemy;
 import at.ran.games.RocketGame.actors.PlayerFighter;
@@ -7,7 +8,6 @@ import at.ran.games.RocketGame.interfaces.IActor;
 import at.ran.games.RocketGame.interfaces.ICollision;
 import at.ran.games.RocketGame.vo.GamePoint;
 import org.newdawn.slick.*;
-import org.newdawn.slick.particles.ParticleSystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +34,15 @@ public class Main extends BasicGame {
         PlayerFighter playerFighter = new PlayerFighter();
         this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
+
+
         //Enemy For-Schleife
-        for (int i = 0; i <1; i++) {
+        for (int i = 0; i <10; i++) {
             NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,15, 100, 50  );
             this.npcEnemyList.add(npcEnemy);
             this.actorList.add(npcEnemy);
             this.playerFighter.addCollisionPartner(npcEnemy);
          }
-
         sound = new Sound("src/at/ran/games/RocketGame/sounds/XWing-Laser.wav");
     }
 
@@ -55,7 +56,7 @@ public class Main extends BasicGame {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         for (IActor items: this.actorList) {
             items.render(graphics);
-        }
+         }
     }
 
     @Override
@@ -75,7 +76,6 @@ public class Main extends BasicGame {
                     items.addCollisionLaserBeamPartner(laserbeam);
                     items.addCollisionLaserBeamPartner(laserbeam2);
                     laserbeam.addCollisionNPCLaserbeam(items);
-                    laserbeam2.addCollisionNPCLaserbeam(items);
                 }
 
                 sound.play();
@@ -87,7 +87,11 @@ public class Main extends BasicGame {
             System.exit(0);
     }
 
-
+    public Graphics renderG()
+    {
+        Graphics g = new Graphics();
+        return g;
+    }
 
     public static void main(String[] argv) {
         try {

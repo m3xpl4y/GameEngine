@@ -33,7 +33,7 @@ public class Laserbeam implements ICollision {
         if(health > 0) {
             laserBeam.draw(this.x - 5, this.y + 10);
         }
-        graphics.draw(this.collisonShape);
+        //graphics.draw(this.collisonShape);
 
     }
 
