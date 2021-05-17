@@ -1,6 +1,5 @@
 package at.ran.games.RocketGame;
 
-import at.ran.games.RocketGame.actors.Explosion;
 import at.ran.games.RocketGame.actors.Laserbeam;
 import at.ran.games.RocketGame.actors.NPCEnemy;
 import at.ran.games.RocketGame.actors.PlayerFighter;
@@ -20,6 +19,10 @@ public class Main extends BasicGame {
     private List<Laserbeam> laserbeamList;
     private PlayerFighter playerFighter;
     private Sound sound;
+    private Image bgImage1;
+    private Image bgImage2;
+    private Image bgImage3;
+
 
     public Main(String title) {
         super(title);
@@ -42,6 +45,13 @@ public class Main extends BasicGame {
             this.actorList.add(npcEnemy);
             this.playerFighter.addCollisionPartner(npcEnemy);
          }
+        bgImage1 = new Image("src/at/ran/games/RocketGame/images/bg1.png");
+        bgImage1.getScaledCopy(2f);
+        bgImage2 = new Image("src/at/ran/games/RocketGame/images/bg2.png");
+        bgImage2.getScaledCopy(125, 121);
+        bgImage3 = new Image("src/at/ran/games/RocketGame/images/bg3.png");
+        bgImage3.getScaledCopy(200,150);
+
         sound = new Sound("src/at/ran/games/RocketGame/sounds/XWing-Laser.wav");
     }
 
@@ -53,6 +63,9 @@ public class Main extends BasicGame {
     }
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+        bgImage1.draw(-100,-100);
+        bgImage2.draw(100, 150);
+        bgImage3.draw(375, 100);
         for (IActor items: this.actorList) {
             items.render(graphics);
          }
