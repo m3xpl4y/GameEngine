@@ -34,7 +34,6 @@ public class Laserbeam implements ICollision {
             laserBeam.draw(this.x - 5, this.y + 10);
         }
         //graphics.draw(this.collisonShape);
-
     }
 
     @Override
@@ -48,9 +47,24 @@ public class Laserbeam implements ICollision {
         }
         this.y -= 10;
         //region REMOVE FROM PLAYABLE SCREEN
-        if(this.x < 0)
-            this.x = -200;
+        removeFromScreen();
+        //endregion
+    }
 
+    @Override
+    public Shape getShape() {
+        return collisonShape;
+    }
+
+    public void addCollisionNPCLaserbeam(ICollision collision)
+    {
+        this.collisionList.add(collision);
+    }
+
+    private void removeFromScreen()
+    {
+        if(this.x < 0)
+            this.x = -210;
         if(this.collisonShape.getX() < 0)
             this.collisonShape.setX(-220);
 
@@ -63,16 +77,5 @@ public class Laserbeam implements ICollision {
             this.collisonShape.setX(-600);
             this.collisonShape.setY(1000);
         }
-        //endregion
-    }
-
-    @Override
-    public Shape getShape() {
-        return collisonShape;
-    }
-
-    public void addCollisionNPCLaserbeam(ICollision collision)
-    {
-        this.collisionList.add(collision);
     }
 }

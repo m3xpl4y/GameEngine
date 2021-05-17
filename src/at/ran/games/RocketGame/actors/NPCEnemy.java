@@ -46,9 +46,6 @@ public class NPCEnemy implements ICollision {
         if (health > 0) {
             NPCimage.draw(this.x, this.y);
         }
-
-
-
         if (isDead()&& millisSinceStart<1200) {
 
             explosion.render(graphics);
@@ -56,9 +53,7 @@ public class NPCEnemy implements ICollision {
         //graphics.draw(this.collisonShape);
     }
 
-    private boolean isDead(){
-        return getHealth()<=0?true:false;
-    }
+
 
     @Override
     public void update(GameContainer gameContainer, int delta) throws SlickException {
@@ -99,6 +94,10 @@ public class NPCEnemy implements ICollision {
         millisSinceStart += delta;
     }
 
+    private boolean isDead(){
+        return getHealth()<=0?true:false;
+    }
+
     @Override
     public Shape getShape() {
         return collisonShape;
@@ -106,12 +105,6 @@ public class NPCEnemy implements ICollision {
 
     public float getHealth() {
         return health;
-    }
-
-    public void getEnemyDeathPosition(float x, float y) {
-        x = getX();
-        y = getY();
-        System.out.println("ENEMY DEATH AT: " + x + " - " + y);
     }
 
     public void addCollisionLaserBeamPartner(ICollision collision) {
