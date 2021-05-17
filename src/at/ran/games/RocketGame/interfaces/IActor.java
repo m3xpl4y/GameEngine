@@ -6,6 +6,6 @@ import org.newdawn.slick.SlickException;
 
 public interface IActor {
 
-    void render(Graphics graphics);
+    void render(Graphics graphics) throws SlickException;
     void update(GameContainer gameContainer, int delta) throws SlickException;
 }

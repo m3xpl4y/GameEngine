@@ -47,6 +47,12 @@ public class Laserbeam implements ICollision {
             }
         }
         this.y -= 10;
+        //region REMOVE FROM PLAYABLE SCREEN
+        if(this.x < 0)
+            this.x = -200;
+
+        if(this.collisonShape.getX() < 0)
+            this.collisonShape.setX(-220);
 
         if(health > 0)
         {
@@ -57,6 +63,7 @@ public class Laserbeam implements ICollision {
             this.collisonShape.setX(-600);
             this.collisonShape.setY(1000);
         }
+        //endregion
     }
 
     @Override

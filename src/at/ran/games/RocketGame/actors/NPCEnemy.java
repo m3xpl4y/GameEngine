@@ -10,6 +10,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,15 @@ public class NPCEnemy implements ICollision {
 
     private float health;
     private float strenght;
-    private float x,y;
+    private float x, y;
     private int speed;
     private final Image NPCimage;
     private Shape collisonShape;
     private List<ICollision> collisionList;
     int counter = 0;
-//    private Explosion explosion;
-//    private int millisSinceStart = 0;
+    private Explosion explosion;
+    private int millisSinceStart = 0;
+    private boolean hasStartedExplosion = false;
 
     public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strength) throws SlickException {
         Image tmp = new Image("src/at/ran/games/RocketGame/images/tieFighter.png");
@@ -34,40 +36,43 @@ public class NPCEnemy implements ICollision {
         this.speed = speed;
         this.health = health;
         this.strenght = strength;
-        this.collisonShape = new Rectangle(this.x,this.y, NPCimage.getWidth(), NPCimage.getHeight());
+        this.collisonShape = new Rectangle(this.x, this.y, NPCimage.getWidth(), NPCimage.getHeight());
         this.collisionList = new ArrayList<ICollision>();
-        //this.explosion = new Explosion();
+
     }
 
     @Override
-    public void render(Graphics graphics) {
-        if(health > 0) {
+    public void render(Graphics graphics) throws SlickException {
+        if (health > 0) {
             NPCimage.draw(this.x, this.y);
         }
-//        if (getHealth() <= 0 && millisSinceStart < 3000) {
-//                explosion.setX(this.x);
-//                explosion.setY(this.y);
-//                explosion.render(graphics);
-//        }
+
+
+
+        if (isDead()&& millisSinceStart<1200) {
+
+            explosion.render(graphics);
+        }
         //graphics.draw(this.collisonShape);
+    }
+
+    private boolean isDead(){
+        return getHealth()<=0?true:false;
     }
 
     @Override
     public void update(GameContainer gameContainer, int delta) throws SlickException {
         //region MOVEMENT
-        this.y += (float) delta/speed;
-        if(this.y > 600)
-        {
+        this.y += (float) delta / speed;
+        if (this.y > 600) {
             this.y = -50;
         }
         //endregion
         //region COLLISION
-        if(this.health > 0){
+        if (this.health > 0) {
             this.collisonShape.setX(this.x);
             this.collisonShape.setY(this.y);
-        }
-        else
-        {
+        } else {
 
             this.collisonShape.setY(-500);
             this.collisonShape.setX(900);
@@ -75,16 +80,23 @@ public class NPCEnemy implements ICollision {
 
         //endregion
         //region FEUER COLLISION
-            for (ICollision collision: collisionList) {
-                if(this.collisonShape.intersects(collision.getShape()))
-                {
-                    counter++;
-                    this.health -= 21;
-                    System.out.println("Feuer Collision " + this.health);
-                }
+        for (ICollision collision : collisionList) {
+            if (this.collisonShape.intersects(collision.getShape())) {
+                counter++;
+                this.health -= 21;
+                System.out.println("Feuer Collision " + this.health);
             }
+        }
         //endregion
-        //millisSinceStart += delta;
+
+        if (isDead() && !hasStartedExplosion){
+            this.explosion = new Explosion();
+            explosion.setX(this.x);
+            explosion.setY(this.y);
+            this.millisSinceStart=0;
+            this.hasStartedExplosion = true;
+        }
+        millisSinceStart += delta;
     }
 
     @Override
@@ -96,18 +108,20 @@ public class NPCEnemy implements ICollision {
         return health;
     }
 
-    public void getEnemyDeathPosition(float x, float y){
+    public void getEnemyDeathPosition(float x, float y) {
         x = getX();
         y = getY();
-        System.out.println("ENEMY DEATH AT: " + x +" - " + y);
+        System.out.println("ENEMY DEATH AT: " + x + " - " + y);
     }
-    public void addCollisionLaserBeamPartner(ICollision collision)
-    {
+
+    public void addCollisionLaserBeamPartner(ICollision collision) {
         this.collisionList.add(collision);
     }
+
     public float getX() {
         return x;
     }
+
     public float getY() {
         return y;
     }

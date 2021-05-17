@@ -35,7 +35,6 @@ public class Main extends BasicGame {
         this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
 
-
         //Enemy For-Schleife
         for (int i = 0; i <10; i++) {
             NPCEnemy npcEnemy = new NPCEnemy(rnd.nextInt(800), rnd.nextInt(600)-600, 55, 55,15, 100, 50  );
@@ -77,7 +76,6 @@ public class Main extends BasicGame {
                     items.addCollisionLaserBeamPartner(laserbeam2);
                     laserbeam.addCollisionNPCLaserbeam(items);
                 }
-
                 sound.play();
             } catch (SlickException e) {
                 e.printStackTrace();
