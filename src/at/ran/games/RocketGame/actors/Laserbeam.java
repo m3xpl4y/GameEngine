@@ -66,7 +66,7 @@ public class Laserbeam implements ICollision {
         if(this.x < 0)
             this.x = -210;
         if(this.collisonShape.getX() < 0)
-            this.collisonShape.setX(-220);
+            this.collisonShape.setX(-210);
 
         if(health > 0)
         {

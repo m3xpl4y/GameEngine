@@ -1,13 +1,7 @@
 package at.ran.games.RocketGame.actors;
 
-import at.ran.games.RocketGame.GameHelper;
-import at.ran.games.RocketGame.interfaces.IActor;
 import at.ran.games.RocketGame.interfaces.ICollision;
-import at.ran.games.RocketGame.vo.GamePoint;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -17,7 +11,7 @@ import java.util.List;
 public class NPCEnemy implements ICollision {
 
     private float health;
-    private float strenght;
+    private float strength;
     private float x, y;
     private int speed;
     private final Image NPCimage;
@@ -27,6 +21,7 @@ public class NPCEnemy implements ICollision {
     private Explosion explosion;
     private int millisSinceStart = 0;
     private boolean hasStartedExplosion = false;
+    private Sound sound;
 
     public NPCEnemy(float x, float y, float w, float h, int speed, float health, float strength) throws SlickException {
         Image tmp = new Image("src/at/ran/games/RocketGame/images/tieFighter.png");
@@ -35,10 +30,10 @@ public class NPCEnemy implements ICollision {
         this.y = y;
         this.speed = speed;
         this.health = health;
-        this.strenght = strength;
+        this.strength = strength;
         this.collisonShape = new Rectangle(this.x, this.y, NPCimage.getWidth(), NPCimage.getHeight());
         this.collisionList = new ArrayList<ICollision>();
-
+        sound = new Sound("src/at/ran/games/RocketGame/sounds/ExplosionSound2.wav");
     }
 
     @Override
@@ -49,6 +44,7 @@ public class NPCEnemy implements ICollision {
         if (isDead()&& millisSinceStart<1200) {
 
             explosion.render(graphics);
+            sound.play();
         }
         //graphics.draw(this.collisonShape);
     }

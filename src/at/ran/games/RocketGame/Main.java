@@ -1,8 +1,6 @@
 package at.ran.games.RocketGame;
 
-import at.ran.games.RocketGame.actors.Laserbeam;
-import at.ran.games.RocketGame.actors.NPCEnemy;
-import at.ran.games.RocketGame.actors.PlayerFighter;
+import at.ran.games.RocketGame.actors.*;
 import at.ran.games.RocketGame.interfaces.IActor;
 import at.ran.games.RocketGame.interfaces.ICollision;
 import at.ran.games.RocketGame.vo.GamePoint;
@@ -19,9 +17,9 @@ public class Main extends BasicGame {
     private List<Laserbeam> laserbeamList;
     private PlayerFighter playerFighter;
     private Sound sound;
-    private Image bgImage1;
-    private Image bgImage2;
-    private Image bgImage3;
+    private BackgroundSpace bgs;
+    private BackgroundNebula bgn;
+    private BackgroundPlanet bgp;
 
 
     public Main(String title) {
@@ -33,8 +31,15 @@ public class Main extends BasicGame {
         this.actorList = new ArrayList<>();
         this.npcEnemyList = new ArrayList<>();
         this.laserbeamList = new ArrayList<>();
+        bgs = new BackgroundSpace(-10,-450, 350);
+        bgn = new BackgroundNebula(10, 15, 370);
+        bgp = new BackgroundPlanet(510, -50, 140);
+        this.actorList.add(bgs);
+        this.actorList.add(bgn);
+        this.actorList.add(bgp);
+
         Random rnd = new Random();
-        PlayerFighter playerFighter = new PlayerFighter();
+        PlayerFighter playerFighter = new PlayerFighter(150);
         this.playerFighter = playerFighter;
         this.actorList.add(playerFighter);
 
@@ -45,12 +50,7 @@ public class Main extends BasicGame {
             this.actorList.add(npcEnemy);
             this.playerFighter.addCollisionPartner(npcEnemy);
          }
-        bgImage1 = new Image("src/at/ran/games/RocketGame/images/bg1.png");
-        bgImage1.getScaledCopy(2f);
-        bgImage2 = new Image("src/at/ran/games/RocketGame/images/bg2.png");
-        bgImage2.getScaledCopy(125, 121);
-        bgImage3 = new Image("src/at/ran/games/RocketGame/images/bg3.png");
-        bgImage3.getScaledCopy(200,150);
+
 
         sound = new Sound("src/at/ran/games/RocketGame/sounds/XWing-Laser.wav");
     }
@@ -63,9 +63,6 @@ public class Main extends BasicGame {
     }
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        bgImage1.draw(-100,-100);
-        bgImage2.draw(100, 150);
-        bgImage3.draw(375, 100);
         for (IActor items: this.actorList) {
             items.render(graphics);
          }
@@ -88,6 +85,7 @@ public class Main extends BasicGame {
                     items.addCollisionLaserBeamPartner(laserbeam);
                     items.addCollisionLaserBeamPartner(laserbeam2);
                     laserbeam.addCollisionNPCLaserbeam(items);
+                    laserbeam2.addCollisionNPCLaserbeam(items);
                 }
                 sound.play();
             } catch (SlickException e) {
